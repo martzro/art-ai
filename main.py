@@ -54,4 +54,4 @@ def check_if_ready():
 
 
 if __name__ == '__main__':
-    app.run(host='172.16.20.139', port=5000, debug=True, threaded=False)
+    app.run(host='172.16.20.139', port=5000, debug=True, threaded=True)

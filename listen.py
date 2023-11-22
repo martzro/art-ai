@@ -17,7 +17,7 @@ def showPIL(pilImage):
     canvas.pack()
     canvas.configure(background='white')
     # Resize to fit screen
-    pilImage = pilImage.resize((w, h), Image.ANTIALIAS)
+    pilImage = pilImage.resize((w, h))
     image = ImageTk.PhotoImage(pilImage)
     imagesprite = canvas.create_image(w / 2, h / 2, image=image)
     root.mainloop()
@@ -48,25 +48,19 @@ def speechToImage(parsed):
 
 
 # speak
-print("Starting")
-while (1):
-    # Exception handling to handle
-    # exceptions at the runtime
-    try:
-        # use the microphone as source for input.
-        with sr.Microphone() as source2:
-
+with sr.Microphone(1) as source:
+    while True:
+        try:
             # wait for a second to let the recognizer
             # adjust the energy threshold based on
             # the surrounding noise level
-            r.adjust_for_ambient_noise(source2, duration=0.2)
+            r.adjust_for_ambient_noise(source, duration=0.2)
 
             # listens for the user's input
-            audio2 = r.listen(source2)
+            audio = r.listen(source)
 
             # Using google to recognize audio
-            MyText = r.recognize_google(audio2)
-            MyText = MyText.lower()
+            MyText = r.recognize_google(audio).lower()
             if "hey computer" in MyText:
                 print('activated...')
                 parsed = MyText.replace('hey computer', '').strip()
@@ -76,8 +70,8 @@ while (1):
                 showPIL(img)
 
 
-    except sr.RequestError as e:
-        print("Could not request results; {0}".format(e))
+        except sr.RequestError as e:
+            print("Could not request results; {0}".format(e))
 
-    except:
-        continue
+        except:
+            continue
