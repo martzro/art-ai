@@ -19,6 +19,7 @@ def showPIL(pilImage):
     # Resize to fit screen
     pilImage = pilImage.resize((w, h), Image.ANTIALIAS)
     image = ImageTk.PhotoImage(pilImage)
+    imagesprite = canvas.create_image(w / 2, h / 2, image=image)
     root.mainloop()
 
 
